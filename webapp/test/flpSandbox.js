@@ -39,7 +39,7 @@ sap.ui.define([
 							"tiles": [{
 								"tileType": "sap.ushell.ui.tile.StaticTile",
 								"properties": {
-									"title": "Banco de Horas Equipe",
+									"title": "Banco de Horas RH",
 									"targetURL": "#hrbancodehorasrh-display"
 								}
 							}]
@@ -54,8 +54,8 @@ sap.ui.define([
 							"hrbancodehorasrh-display": {
 								"semanticObject": "hrbancodehorasrh",
 								"action": "display",
-								"description": "Banco de Horas Equipe",
-								"title": "Banco de Horas Equipe",
+								"description": "Banco de Horas RH",
+								"title": "Banco de Horas RH",
 								"signature": {
 									"parameters": {}
 								},

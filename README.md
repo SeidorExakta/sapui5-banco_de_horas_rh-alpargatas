@@ -9,7 +9,7 @@
 |**Service Type**<br>SAP System (ABAP On Premise)|
 |**Service URL**<br>http://dev:8001/sap/opu/odata/sap/ZHRTIME_RH_BH_SRV|
 |**Module Name**<br>banco_de_horas_rh|
-|**Application Title**<br>Banco de Horas Equipe|
+|**Application Title**<br>Banco de Horas RH|
 |**Namespace**<br>hr|
 |**UI5 Theme**<br>sap_horizon|
 |**UI5 Version**<br>1.128.1|
@@ -19,7 +19,7 @@
 
 ## banco_de_horas_rh
 
-Banco de Horas Equipe
+Banco de Horas RH
 
 ### Starting the generated app
 
