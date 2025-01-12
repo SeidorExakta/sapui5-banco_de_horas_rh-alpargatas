@@ -5,7 +5,7 @@
 sap.ui.define([
     "sap/ui/core/UIComponent",
     "sap/ui/Device",
-    "hr/bancodehorasgestor/model/models",
+    "hr/bancodehorasrh/model/models",
     "sap/base/util/UriParameters",
     "sap/f/library",
     "sap/f/FlexibleColumnLayoutSemanticHelper"
@@ -15,7 +15,7 @@ sap.ui.define([
 
         var LayoutType = library.LayoutType;
 
-        return UIComponent.extend("hr.bancodehorasgestor.Component", {
+        return UIComponent.extend("hr.bancodehorasrh.Component", {
             metadata: {
                 manifest: "json"
             },

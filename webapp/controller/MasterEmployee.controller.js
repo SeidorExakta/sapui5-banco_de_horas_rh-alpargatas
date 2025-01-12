@@ -10,11 +10,11 @@ sap.ui.define([
 ], function (BaseController, Filter, FilterOperator, Sorter, GroupHeaderListItem, Device, Fragment, JSONModel) {
     "use strict";
 
-    // var sServiceUrl = ("/sap/opu/odata/sap/ZHRTIME_MANAGER_BH_SRV/");
+    // var sServiceUrl = ("/sap/opu/odata/sap/ZHRTIME_RH_BH_SRV/");
     // var oOData = new sap.ui.model.odata.ODataModel(sServiceUrl, true);
     var oOData;
 
-    return BaseController.extend("hr.bancodehorasgestor.controller.MasterEmployee", {
+    return BaseController.extend("hr.bancodehorasrh.controller.MasterEmployee", {
 
         onInit: function () {
 
@@ -156,7 +156,7 @@ sap.ui.define([
             if (!this.byId("viewSettingsDialog")) {
                 Fragment.load({
                     id: this.getView().getId(),
-                    name: "hr.bancodehorasgestor.view.ViewSettingsDialog",
+                    name: "hr.bancodehorasrh.view.ViewSettingsDialog",
                     controller: this
                 }).then(function (oDialog) {
                     // connect dialog to the root view of this component (models, lifecycle)

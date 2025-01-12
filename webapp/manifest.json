@@ -1,7 +1,7 @@
 {
   "_version": "1.65.0",
   "sap.app": {
-    "id": "hr.bancodehorasgestor",
+    "id": "hr.bancodehorasrh",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
@@ -17,7 +17,7 @@
     },
     "dataSources": {
       "mainService": {
-        "uri": "/sap/opu/odata/sap/ZHRTIME_MANAGER_BH_SRV/",
+        "uri": "/sap/opu/odata/sap/ZHRTIME_RH_BH_SRV/",
         "type": "OData",
         "settings": {
           "annotations": [],
@@ -28,8 +28,8 @@
     },
     "crossNavigation": {
       "inbounds": {
-        "BancoDeHorasGestor-Display": {
-          "semanticObject": "BancoDeHorasGestor",
+        "bancodehorasrh-Display": {
+          "semanticObject": "bancodehorasrh",
           "action": "Display",
           "icon": "sap-icon://detail-view",
           "title": "{{flpTitle}}",
@@ -74,7 +74,7 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "hr.bancodehorasgestor.i18n.i18n"
+          "bundleName": "hr.bancodehorasrh.i18n.i18n"
         }
       },
       "": {
@@ -99,7 +99,7 @@
       "config": {
         "routerClass": "",
         "viewType": "XML",
-        "viewPath": "hr.bancodehorasgestor.view",
+        "viewPath": "hr.bancodehorasrh.view",
         "controlId": "layout",
         "controlAggregation": "midColumnPages",
         "bypassed": {
@@ -153,7 +153,7 @@
           "viewId": "masterEmployee",
           "viewLevel": 1,
           "controlId": "layout",
-          "viewPath": "hr.bancodehorasgestor.view",
+          "viewPath": "hr.bancodehorasrh.view",
           "controlAggregation": "beginColumnPages"
         },
         "MasterEmployeeBack": {
@@ -165,7 +165,7 @@
       }
     },
     "rootView": {
-      "viewName": "hr.bancodehorasgestor.view.App",
+      "viewName": "hr.bancodehorasrh.view.App",
       "type": "XML",
       "async": true,
       "id": "App"
@@ -173,6 +173,6 @@
   },
   "sap.cloud": {
     "public": true,
-    "service": "hrbancodehorasgestor"
+    "service": "hrbancodehorasrh"
   }
 }

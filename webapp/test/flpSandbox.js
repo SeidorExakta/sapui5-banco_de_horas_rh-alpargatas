@@ -40,7 +40,7 @@ sap.ui.define([
 								"tileType": "sap.ushell.ui.tile.StaticTile",
 								"properties": {
 									"title": "Banco de Horas Equipe",
-									"targetURL": "#hrbancodehorasgestor-display"
+									"targetURL": "#hrbancodehorasrh-display"
 								}
 							}]
 						}]
@@ -51,8 +51,8 @@ sap.ui.define([
 				"adapter": {
 					"config": {
 						"inbounds": {
-							"hrbancodehorasgestor-display": {
-								"semanticObject": "hrbancodehorasgestor",
+							"hrbancodehorasrh-display": {
+								"semanticObject": "hrbancodehorasrh",
 								"action": "display",
 								"description": "Banco de Horas Equipe",
 								"title": "Banco de Horas Equipe",
@@ -61,8 +61,8 @@ sap.ui.define([
 								},
 								"resolutionResult": {
 									"applicationType": "SAPUI5",
-									"additionalInformation": "SAPUI5.Component=hr.bancodehorasgestor",
-									"url": sap.ui.require.toUrl("hr/bancodehorasgestor")
+									"additionalInformation": "SAPUI5.Component=hr.bancodehorasrh",
+									"url": sap.ui.require.toUrl("hr/bancodehorasrh")
 								}
 							}
 						}

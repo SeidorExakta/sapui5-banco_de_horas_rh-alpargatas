@@ -1,7 +1,7 @@
 /*global QUnit*/
 
 sap.ui.define([
-	"hr/banco_de_horas_gestor/controller/MasterUnidOrg.controller"
+	"hr/banco_de_horas_rh/controller/MasterUnidOrg.controller"
 ], function (Controller) {
 	"use strict";
 

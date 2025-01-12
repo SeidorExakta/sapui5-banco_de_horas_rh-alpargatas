@@ -5,7 +5,7 @@
 	xmlns:f="sap.f"
 	xmlns:core="sap.ui.core"
 	xmlns="sap.m"
-	controllerName="hr.bancodehorasgestor.controller.Detail">
+	controllerName="hr.bancodehorasrh.controller.Detail">
 	<App id="idApp">
 	    <Page id="MainPage" showHeader="true">
 	    <landmarkInfo>

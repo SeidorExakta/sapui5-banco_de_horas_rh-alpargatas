@@ -1,5 +1,5 @@
 <mvc:View
-	controllerName="hr.bancodehorasgestor.controller.App"
+	controllerName="hr.bancodehorasrh.controller.App"
 	displayBlock="true"
 	height="100%"
 	xmlns="sap.m"

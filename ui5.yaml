@@ -2,7 +2,7 @@
 
 specVersion: "3.1"
 metadata:
-  name: hr.bancodehorasgestor
+  name: hr.bancodehorasrh
 type: application
 server:
   customMiddleware:
@@ -29,5 +29,5 @@ server:
     - name: fiori-tools-preview
       afterMiddleware: fiori-tools-appreload
       configuration:
-        component: hr.bancodehorasgestor
+        component: hr.bancodehorasrh
         ui5Theme: sap_horizon

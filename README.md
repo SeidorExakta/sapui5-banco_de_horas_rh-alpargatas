@@ -7,8 +7,8 @@
 |**Generation Platform**<br>SAP Business Application Studio|
 |**Template Used**<br>simple|
 |**Service Type**<br>SAP System (ABAP On Premise)|
-|**Service URL**<br>http://dev:8001/sap/opu/odata/sap/ZHRTIME_MANAGER_BH_SRV|
-|**Module Name**<br>banco_de_horas_gestor|
+|**Service URL**<br>http://dev:8001/sap/opu/odata/sap/ZHRTIME_RH_BH_SRV|
+|**Module Name**<br>banco_de_horas_rh|
 |**Application Title**<br>Banco de Horas Equipe|
 |**Namespace**<br>hr|
 |**UI5 Theme**<br>sap_horizon|
@@ -17,7 +17,7 @@
 |**Enable TypeScript**<br>False|
 |**Add Eslint configuration**<br>False|
 
-## banco_de_horas_gestor
+## banco_de_horas_rh
 
 Banco de Horas Equipe
 

@@ -14,7 +14,7 @@ sap.ui.define([
 			// start the app UI component
 			this.iStartMyUIComponent({
 				componentConfig: {
-					name: "hr.bancodehorasgestor",
+					name: "hr.bancodehorasrh",
 					async: true
 				},
 				hash: oOptions.hash,

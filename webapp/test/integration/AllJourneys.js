@@ -7,7 +7,7 @@ sap.ui.define([
 
 	Opa5.extendConfig({
 		arrangements: new Startup(),
-		viewNamespace: "hr.bancodehorasgestor.view.",
+		viewNamespace: "hr.bancodehorasrh.view.",
 		autoWait: true
 	});
 });

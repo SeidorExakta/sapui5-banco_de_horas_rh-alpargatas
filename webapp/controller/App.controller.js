@@ -5,7 +5,7 @@ sap.ui.define([
 ], function (BaseController, JSONModel, Device) {
   "use strict";
 
-  return BaseController.extend("hr.bancodehorasgestor.controller.App", {
+  return BaseController.extend("hr.bancodehorasrh.controller.App", {
 
     onInit: function () {
       var oViewModel,

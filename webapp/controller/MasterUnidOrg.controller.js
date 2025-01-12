@@ -10,7 +10,7 @@ sap.ui.define([
 ], function (BaseController, JSONModel, Filter, Sorter, FilterOperator, GroupHeaderListItem, Device, Fragment) {
     "use strict";
 
-    return BaseController.extend("hr.bancodehorasgestor.controller.MasterUnidOrg", {
+    return BaseController.extend("hr.bancodehorasrh.controller.MasterUnidOrg", {
 
         onInit: function () {
 
@@ -92,7 +92,7 @@ sap.ui.define([
             if (!this.byId("viewSettingsDialog")) {
                 Fragment.load({
                     id: this.getView().getId(),
-                    name: "hr.bancodehorasgestor.view.ViewSettingsDialog",
+                    name: "hr.bancodehorasrh.view.ViewSettingsDialog",
                     controller: this
                 }).then(function (oDialog) {
                     this.getView().addDependent(oDialog);

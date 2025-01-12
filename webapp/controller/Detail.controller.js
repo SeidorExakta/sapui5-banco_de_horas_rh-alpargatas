@@ -10,7 +10,7 @@ sap.ui.define([
 ], function (BaseController, MessageToast, DateFormat, PDFViewer, Dialog, Button, ButtonType, JSONModel) {
     "use strict";
 
-    // var sServiceUrl = ("/sap/opu/odata/sap/ZHRTIME_MANAGER_BH_SRV/");
+    // var sServiceUrl = ("/sap/opu/odata/sap/ZHRTIME_RH_BH_SRV/");
     // var oOData = new sap.ui.model.odata.ODataModel(sServiceUrl, true);
     var oOData;
     var gPernr = "";
@@ -29,7 +29,7 @@ sap.ui.define([
         }
     }
 
-    return BaseController.extend("hr.bancodehorasgestor.controller.Detail", {
+    return BaseController.extend("hr.bancodehorasrh.controller.Detail", {
 
         onInit: function () {
             // Step adicional em todas as apps pra funcionar essa gambiarra de acesso ao oModel no Workzone
