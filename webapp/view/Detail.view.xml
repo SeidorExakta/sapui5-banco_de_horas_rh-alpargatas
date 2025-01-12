@@ -1,0 +1,114 @@
+<mvc:View
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:uxap="sap.uxap"
+	xmlns:layout="sap.ui.layout"
+	xmlns:f="sap.f"
+	xmlns:core="sap.ui.core"
+	xmlns="sap.m"
+	controllerName="hr.bancodehorasgestor.controller.Detail">
+	<App id="idApp">
+	    <Page id="MainPage" showHeader="true">
+	    <landmarkInfo>
+			<PageAccessibleLandmarkInfo id="_IDEGen_pageaccessiblelandmarkinfo0"
+				rootRole="Region"
+				rootLabel="{i18n>Welcome_rootLabel}"
+				contentRole="Main"
+				contentLabel="{i18n>Welcome_contentLabel}"
+				headerRole="Region"
+				headerLabel="{i18n>Welcome_headerLabel}"/>
+		</landmarkInfo>
+		<customHeader>
+			<Bar id="_IDEGen_bar0">
+				<contentLeft>
+					<Button id="enterFullScreenBtn"
+						tooltip="Navegação"
+						icon="sap-icon://menu2"
+						press=".onCloseMasterPress"
+						visible="true"/>
+				</contentLeft>
+				<contentMiddle>
+					<Title id="_IDEGen_title0"
+						level="H2"
+						tooltip="{i18n>welcomeDescription}"
+						text=""/>
+				</contentMiddle>
+				<contentRight>
+					<Button id="_IDEGen_button1"
+						icon="sap-icon://customer"
+						visible="false"
+						press=".onAvatarPress"
+						tooltip="{i18n>avatarButtonTooltip}"/>
+					<ToggleButton id="_IDEGen_togglebutton0"
+						icon="sap-icon://cart"
+						visible="false"
+						pressed="{= ${appView>/layout}.startsWith('ThreeColumns') }"
+						tooltip="{i18n>toCartButtonTooltip}"
+						press=".onToggleCart">
+					</ToggleButton>
+				</contentRight>
+			</Bar>
+		</customHeader>
+	        <content>
+	          <ObjectHeader id="oh1" responsive="true" binding="{header>/results/0}" intro="{Description}" title="{Name}">
+	                <statuses>
+	                	<ObjectStatus id="_IDEGen_objectstatus0" title="NOME" text="{header>cname}"/>
+		          		<ObjectStatus id="_IDEGen_objectstatus1" title="POSIÇÃO" text="{header>plans}"/>
+		          		<ObjectStatus id="_IDEGen_objectstatus2" title="UNIDADE ORG" text="{header>orgeh}"/>
+	                </statuses>
+	                <statuses>
+		          		<ObjectStatus id="_IDEGen_objectstatus3" title="GESTOR" text="{header>gname}"/>
+	                </statuses>
+	            	<statuses>
+	                	<ObjectStatus id="_IDEGen_objectstatus4" title="REGRA PL.HORÁR.TRAB" text="{header>rgplnh}"/>
+	                </statuses>
+	                <headerContainer>
+	                </headerContainer>
+	            </ObjectHeader>
+	            <layout:HorizontalLayout
+	            	id="idHLData"
+	            	class="sapUiContentPadding">
+					<!--
+					<DateRangeSelection
+						id="idRangeData"
+						width="400px"
+						dateValue="{path:'/dateValueDRS2'}"
+						secondDateValue="{path:'/secondDateValueDRS2'}"
+						minDate="{path:'/dateMinDRS2'}"
+						maxDate="{path:'/dateMaxDRS2'}"
+						change="handleChangeAbsent"/>
+					-->
+					<DatePicker
+						id="idRangeData"
+						width="400px"
+						value="2025-02-01"
+						dateValue="{path:'/dateValueDRS2'}"
+						displayFormat="MM-y"
+						change="handleChange"
+						class="sapUiSmallMarginBottom"/>
+
+					
+	            </layout:HorizontalLayout>
+	             <layout:HorizontalLayout
+	            	id="idHLSPACE"
+	            	class="sapUiContentPadding">
+	             	</layout:HorizontalLayout>
+	            <layout:HorizontalLayout
+	            	id="idHLBotao"
+	            	class="sapUiContentPadding">
+	            	<Button
+						visible="false"
+						id="idBtnRelat"
+						text=""
+						press="onPressBusca"
+						tooltip="Executar"
+						icon="sap-icon://history"/>
+				</layout:HorizontalLayout>
+	            <PDFViewer id="idbancohoras" visible="false" title="" height="1000px" displayType="Auto" showDownloadButton="true" isTrustedSource="true">
+					<layoutData>
+						<FlexItemData growFactor="1"/>
+					</layoutData>
+				</PDFViewer>
+	        </content>
+    	</Page>
+    </App>
+</mvc:View>

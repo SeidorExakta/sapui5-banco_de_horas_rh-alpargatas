@@ -1,0 +1,91 @@
+<mvc:View
+	controllerName="hr.bancodehorasgestor.controller.MasterUnidOrg"
+	xmlns="sap.m"
+	xmlns:semantic="sap.m.semantic"
+	xmlns:mvc="sap.ui.core.mvc">
+	<semantic:SemanticPage
+		id="masterPage"
+		title="Unidades Organizacionais"
+		showNavButton="false"
+		navButtonPress=".onBackPress"
+		showFooter="false">
+		<semantic:content>
+			<List
+				id="list"
+				width="auto"
+				class="sapFDynamicPageAlignContent"
+				items="{
+					path: '/organizationalUnitsSet',
+					sorter: {
+						path: 'orgehTxt',
+						descending: false
+					},
+					groupHeaderFactory: '.createGroupHeader'
+				}"
+				busyIndicatorDelay="{masterView>/delay}"
+				noDataText="{masterView>/noDataText}"
+				
+				growing="true"
+				growingScrollToLoad="true"
+				updateFinished=".onUpdateFinished">
+				<infoToolbar>
+					<Toolbar
+						active="true"
+						id="filterBar"
+						visible="{masterView>/isFilterBarVisible}"
+						press=".onOpenViewSettings">
+						<Title
+							id="filterBarLabel"
+							text="{masterView>/filterBarLabel}"
+							level="H3"/>
+					</Toolbar>
+				</infoToolbar>
+				<headerToolbar>
+					<OverflowToolbar id="_IDEGen_overflowtoolbar0">
+						<SearchField
+							id="searchField"
+							showRefreshButton="true"
+							tooltip="{i18n>masterSearchTooltip}"
+							search=".onSearch"
+							width="auto">
+							<layoutData>
+								<OverflowToolbarLayoutData id="_IDEGen_overflowtoolbarlayoutdata0"
+									minWidth="150px"
+									maxWidth="240px"
+									shrinkable="true"
+									priority="NeverOverflow"/>
+							</layoutData>
+						</SearchField>
+						<ToolbarSpacer id="_IDEGen_toolbarspacer0"/>
+						<Button
+							id="sortButton"
+							visible="false"
+							press=".onOpenViewSettings"
+							icon="sap-icon://sort"
+							type="Transparent"/>
+						<Button
+							id="filterButton"
+							visible="false"
+							press=".onOpenViewSettings"
+							icon="sap-icon://filter"
+							type="Transparent"/>
+						<Button
+							id="groupButton"
+							visible="false"
+							press=".onOpenViewSettings"
+							icon="sap-icon://group-2"
+							type="Transparent"/>
+					</OverflowToolbar>
+				</headerToolbar>
+				<items>
+					<StandardListItem id="idStandardListItem"
+						title="{orgehTxt}"
+						type="Active"
+						counter="{count}"
+						press=".onUniOrgListItemPress">
+					</StandardListItem>
+				</items>
+			</List>
+		</semantic:content>
+	</semantic:SemanticPage>
+</mvc:View>
