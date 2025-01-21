@@ -85,7 +85,7 @@
       "data": {
         "type": "sap.ui.model.json.JSONModel",
         "settings": {},
-        "preload": false
+        "preload": true
       }
     },
     "resources": {
@@ -101,15 +101,14 @@
         "viewType": "XML",
         "viewPath": "hr.bancodehorasrh.view",
         "controlId": "layout",
-        "controlAggregation": "midColumnPages",
+        "controlAggregation": "beginColumnPages",
         "bypassed": {
           "target": [
             "MasterEmployee"
           ]
         },
         "clearControlAggregation": true,
-        "async": true,
-        "viewLevel": 1
+        "async": true
       },
       "routes": [
         {
@@ -117,7 +116,8 @@
           "pattern": "MasterEmployee/{orgeh}",
           "titleTarget": "",
           "target": [
-            "MasterEmployee"
+            "MasterEmployee",
+            "object"
           ]
         },
         {
@@ -125,7 +125,18 @@
           "pattern": "MasterEmployee",
           "titleTarget": "",
           "target": [
-            "MasterEmployee"
+            "MasterEmployee",
+            "object"
+          ]
+        },
+        {
+          "pattern": "Orgeh/{orgeh}/Employee/{pernr}",
+          "name": "object",
+          "target": [
+            "orgeh",
+            "object",
+            "MasterEmployee",
+            "Detail"
           ]
         },
         {
@@ -133,8 +144,10 @@
           "pattern": "Detail/{pernr}/Detail/{datum}/Detail{orgeh}",
           "titleTarget": "",
           "target": [
+            "DetailPerio",
             "Detail",
-            "MasterEmployee"
+            "MasterEmployee",
+            "object"
           ]
         }
       ],
@@ -142,10 +155,16 @@
         "Detail": {
           "viewName": "Detail",
           "viewId": "detail",
-          "viewLevel": 0,
+          "viewLevel": 3,
           "controlId": "layout",
-          "controlAggregation": "midColumnPages",
+          "controlAggregation": "endColumnPages",
           "transition": "slide"
+        },
+        "object": {
+          "viewName": "Periodos",
+          "viewId": "periodos",
+          "viewLevel": 2,
+          "controlAggregation": "midColumnPages"
         },
         "MasterEmployee": {
           "viewType": "XML",

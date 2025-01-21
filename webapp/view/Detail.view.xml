@@ -64,10 +64,11 @@
 	                <headerContainer>
 	                </headerContainer>
 	            </ObjectHeader>
+				<!--
 	            <layout:HorizontalLayout
 	            	id="idHLData"
 	            	class="sapUiContentPadding">
-					<!--
+					
 					<DateRangeSelection
 						id="idRangeData"
 						width="400px"
@@ -76,7 +77,7 @@
 						minDate="{path:'/dateMinDRS2'}"
 						maxDate="{path:'/dateMaxDRS2'}"
 						change="handleChangeAbsent"/>
-					-->
+					
 					<DatePicker
 						id="idRangeData"
 						width="400px"
@@ -85,13 +86,16 @@
 						displayFormat="MM-y"
 						change="handleChange"
 						class="sapUiSmallMarginBottom"/>
-
 					
 	            </layout:HorizontalLayout>
+				
+
 	             <layout:HorizontalLayout
 	            	id="idHLSPACE"
 	            	class="sapUiContentPadding">
 	             	</layout:HorizontalLayout>
+				-->
+				
 	            <layout:HorizontalLayout
 	            	id="idHLBotao"
 	            	class="sapUiContentPadding">

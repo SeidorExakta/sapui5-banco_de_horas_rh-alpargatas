@@ -1,0 +1,39 @@
+<mvc:View controllerName="hr.bancodehorasrh.controller.Periodos" xmlns="sap.m" xmlns:semantic="sap.f.semantic"
+	xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core">
+	<semantic:SemanticPage id="periodos" busy="{detailView>/busy}" busyIndicatorDelay="{detailView>/delay}" class="sapUiContentPadding">
+		<semantic:titleHeading>
+			<Title text="{cname}"/>
+		</semantic:titleHeading>
+		<semantic:headerContent>
+			<ToolbarSpacer/>
+			<SearchField id="idSearch" search=".onSearch" width="auto" placeholder="{i18n>placeSearch}"/>
+			<!--<CheckBox id="idPend" text="Somente pendentes" selected="true" select="onSearch"/>-->
+		</semantic:headerContent>
+		<semantic:exitFullScreenAction>
+			<semantic:ExitFullScreenAction id="exitFullScreen"
+				visible="{= !${device>/system/phone} &amp;&amp; ${appView>/actionButtonsInfo/midColumn/fullScreen}}" press=".toggleFullScreen"/>
+		</semantic:exitFullScreenAction>
+		<semantic:closeAction>
+			<semantic:CloseAction id="closeColumn"
+				visible="{= ${appView>/layout} === 'TwoColumnsMidExpanded' || ${appView>/layout} === 'MidColumnFullScreen' || ${appView>/layout} === 'TwoColumnsBeginExpanded' ? true : false }"
+				press=".onCloseDetailPress"/>
+		</semantic:closeAction>
+		<semantic:content>
+			<List id="IdTable" inset="false"
+				items="{ path: 'AssinaturaSet', sorter: [{ path: 'Ano', descending: true},{ path: 'Mes', descending: true}], filters : { path : 'Pendente', operator : 'EQ', value1 : true } }"
+				class="sapFDynamicPageAlignConten" width="100%">
+				<items>
+					<CustomListItem type="Navigation" press=".onSelectionChange">
+						<content>
+							<HBox class="sapUiTinyMargin">
+								<ObjectIdentifier title="Período: {Mes}/{Ano}" />
+								<!--<core:Icon src='{Icone}' color="#031E48" width="32px" size="1.2em" class="sapUiSmallMarginTop sapUiSmallMarginEnd"/>
+								<ObjectIdentifier title="Período: {Mes}/{Ano}" text="{Pendenciadesc}"/>-->
+							</HBox>
+						</content>
+					</CustomListItem>
+				</items>
+			</List>
+		</semantic:content>
+	</semantic:SemanticPage>
+</mvc:View>

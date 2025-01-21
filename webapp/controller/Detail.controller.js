@@ -15,6 +15,7 @@ sap.ui.define([
     var oOData;
     var gPernr = "";
     var gOrgeh = "";
+    var gPeriod = "";
 
     function addDate(dt, amount, dateType) {
         switch (dateType) {
@@ -45,8 +46,9 @@ sap.ui.define([
         _onRoute: function (evt) {
             gPernr = evt.getParameters().arguments.pernr;
             gOrgeh = evt.getParameters().arguments.orgeh;
+            gPeriod = evt.getParameters().arguments.datum;
             this.loadHeader(gPernr);
-            this.utilLoadEntity(gPernr);
+            this.utilLoadEntity(gPernr, gPeriod);
         },
 
         loadHeader: function (matricula) {
@@ -106,6 +108,7 @@ sap.ui.define([
             sURL = sURL.replace(/:/g, '%3A');
             */
 
+            debugger;
             if (!pPeriodo)
             {
                 var today  = new Date();
@@ -233,11 +236,15 @@ sap.ui.define([
                         that.getModel("appView").setProperty("/layout", "OneColumn");
                         break;
                     case "Desktop":
+                        debugger;
                         var vFullSreen = that.getModel("appView").getData().layout;
-                        if (vFullSreen === "TwoColumnsMidExpanded") {
-                            that._setLayout("Full");
+                        if (vFullSreen === "ThreeColumnsEndExpanded") {
+                            //that._setLayout("EndColumnFullScreen");
+                            that.getModel("appView").setProperty("/previousLayout", that.getModel("appView").getProperty("/layout"));
+                            that.getModel("appView").setProperty("/layout", "EndColumnFullScreen");
                         } else {
-                            that._setLayout("Two");
+                            //that._setLayout("Full");
+                            that.getModel("appView").setProperty("/layout", that.getModel("appView").getProperty("/previousLayout"));
                         }
                 }
             }

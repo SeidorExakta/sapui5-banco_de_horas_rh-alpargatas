@@ -103,11 +103,18 @@ sap.ui.define([
             // Exemplo: "202007";
             vPeriod = vDate.substr(6, 4) + vDate.substr(3, 2);
             var oEntry = oItem.getBindingContext("Employees").getProperty();
-            this.getRouter().navTo("Detail", {
-                pernr: oEntry.pernr,
-                datum: vPeriod,
-                orgeh: oEntry.orgeh
+
+            //this.getRouter().navTo("Detail", {
+            //    pernr: oEntry.pernr,
+            //    datum: vPeriod,
+            //    orgeh: oEntry.orgeh
+            //});
+
+            this.getRouter().navTo("object", {
+                orgeh: oEntry.orgeh,
+                pernr: oEntry.pernr
             });
+            
         },
 
         onSearch: function (oEvent) {
