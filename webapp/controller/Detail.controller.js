@@ -7,7 +7,8 @@ sap.ui.define([
     "sap/m/Button",
     "sap/m/ButtonType",
     "sap/ui/model/json/JSONModel",
-], function (BaseController, MessageToast, DateFormat, PDFViewer, Dialog, Button, ButtonType, JSONModel) {
+    "../model/formatter",
+], function (BaseController, MessageToast, DateFormat, PDFViewer, Dialog, Button, ButtonType, JSONModel, formatter) {
     "use strict";
 
     // var sServiceUrl = ("/sap/opu/odata/sap/ZHRTIME_RH_BH_SRV/");
@@ -32,30 +33,126 @@ sap.ui.define([
 
     return BaseController.extend("hr.bancodehorasrh.controller.Detail", {
 
+        formatter: formatter,
+        
         onInit: function () {
             // Step adicional em todas as apps pra funcionar essa gambiarra de acesso ao oModel no Workzone
             oOData = this.getOwnerComponent().getModel();
 
+            var oViewModel = new JSONModel({
+                busy: false,
+                delay: 0,
+                urlPdf: null,
+                urlPdfVisible: false,
+                option: null
+            });
+
+            var oJson = new JSONModel({
+                cname: "teste"
+            });
+
             this.Busy = new sap.m.BusyDialog({ busyIndicatorDelay: 0 });
             this.Busy.open();
             this.setInitDate();
+           
             this.getRouter().getRoute("Detail").attachMatched(this._onRoute, this);
+
+            this.setModel(oViewModel, "detailView");
+            this.setModel(oJson, "Header");
+
             this.Busy.close();
         },
 
         _onRoute: function (evt) {
+
             gPernr = evt.getParameters().arguments.pernr;
             gOrgeh = evt.getParameters().arguments.orgeh;
             gPeriod = evt.getParameters().arguments.datum;
+
             this.loadHeader(gPernr);
             this.utilLoadEntity(gPernr, gPeriod);
+        },
+
+        _onObjectMatched: function (oEvent) {
+            //Parâmetros URL
+            gPernr  = oEvent.getParameter("arguments").pernr;
+            gOrgeh  = oEvent.getParameter("arguments").orgeh;
+            gPeriod = oEvent.getParameter("arguments").datum;
+            
+        },
+
+        _bindView: function (sObjectPath) {
+            // Set busy indicator during view binding
+            var oViewModel = this.getModel("detailView");
+
+            // If the view was not bound yet its not busy, only if the binding requests data it is set to busy again
+            oViewModel.setProperty("/busy", false);
+
+            debugger;
+            this.getView().bindElement({
+                path: sObjectPath,
+                parameters: {
+                    expand: "Header"
+                },
+                events: {
+                    change: this._onBindingChange.bind(this),
+                    dataRequested: function () {
+                        oViewModel.setProperty("/busy", true);
+                    },
+                    dataReceived: function () { }
+                }
+            });
+        },
+
+        _onMetadataLoaded: function () {
+            // Store original busy indicator delay for the detail view
+            var iOriginalViewBusyDelay = this.getView().getBusyIndicatorDelay(),
+            oViewModel = this.getModel("detailView");
+
+            // Make sure busy indicator is displayed immediately when
+            // detail view is displayed for the first time
+            oViewModel.setProperty("/delay", 0);
+
+            // Binding the view will set it to not busy - so the view is always busy if it is not bound
+            oViewModel.setProperty("/busy", true);
+            // Restore original busy indicator delay for the detail view
+            oViewModel.setProperty("/delay", iOriginalViewBusyDelay);
+        },
+
+        _onBindingChange: function () {
+
+            var oView = this.getView(),
+                oElementBinding = oView.getElementBinding();
+            // Set busy indicator during view binding
+            var oViewModel = this.getModel("detailView");
+
+            // No data for the binding
+            if (!oElementBinding.getBoundContext()) {
+                this.getRouter().getTargets().display("detailObjectNotFoundP");
+                // if object could not be found, the selection in the master list
+                // does not make sense anymore.
+                this.getOwnerComponent().oListSelector.clearMasterListSelection();
+                oViewModel.setProperty("/busy", false);
+                return;
+            }
+
+            //Url PDF
+            /*
+            var sKeyPdf = this.getModel().createKey("EspelhoPontoSet", {
+                Pernrg: "0",
+                Pernr: oElementBinding.getBoundContext().getProperty("Pernr"),
+                Ano: oElementBinding.getBoundContext().getProperty("Ano"),
+                Mes: oElementBinding.getBoundContext().getProperty("Mes")
+            });
+
+            var sUrl = sKeyPdf + "/$value";
+            this.getPdfbyKey(sUrl);
+            */
         },
 
         loadHeader: function (matricula) {
             var that = this;
 
-            // Não funciona mais. Filters e Expand são enviados como parâmetro no urlParameters
-            // var sURL = "/headerSet/?$filter=pernr eq '" + matricula + "'";
             var sURL = "/headerSet";
             var value = sURL;
             var oJson = new sap.ui.model.json.JSONModel();
@@ -66,6 +163,7 @@ sap.ui.define([
                 success: function (oSuccess) {
                     if (oSuccess) {
                         oJson.setData(oSuccess);
+                        console.log(oSuccess.results[0]);
                         that.getView().setModel(oJson, "header");
                     }
                 },
@@ -108,7 +206,6 @@ sap.ui.define([
             sURL = sURL.replace(/:/g, '%3A');
             */
 
-            debugger;
             if (!pPeriodo)
             {
                 var today  = new Date();
@@ -116,8 +213,14 @@ sap.ui.define([
             }
             else
                 vPeriodo = pPeriodo;
-            
-            console.log("Per", vPeriodo );
+
+            console.log(pPeriodo);
+            var oModelp = new sap.ui.model.json.JSONModel();
+            oModelp.setData({
+                Ano: vPeriodo.substring(0,4),
+                Mes:vPeriodo.substring(4,6)
+            });
+            this.getView().setModel(oModelp);
 
             var oPDFViewer = this.getView().byId("idbancohoras");
 

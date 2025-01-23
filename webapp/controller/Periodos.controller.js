@@ -158,7 +158,6 @@ sap.ui.define([
             // If the view was not bound yet its not busy, only if the binding requests data it is set to busy again
             oViewModel.setProperty("/busy", false);
             
-            debugger;
             sObjectPath = sObjectPath.replace("null", gPernr);
 
             this.getView().bindElement({

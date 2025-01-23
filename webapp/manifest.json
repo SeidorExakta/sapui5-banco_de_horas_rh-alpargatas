@@ -144,7 +144,6 @@
           "pattern": "Detail/{pernr}/Detail/{datum}/Detail{orgeh}",
           "titleTarget": "",
           "target": [
-            "DetailPerio",
             "Detail",
             "MasterEmployee",
             "object"
