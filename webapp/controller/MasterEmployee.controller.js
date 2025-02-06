@@ -23,9 +23,6 @@ sap.ui.define([
 
             var oComponent = this.getOwnerComponent();
             this._router = oComponent.getRouter();
-            // this._router.getTarget("MasterEmployee").attachDisplay(function (oEvent) {
-            //     this.utilLoadEntity(oEvent.getParameter("data").orgeh);
-            // }, this);
 
             var oList = this.byId("list"),
                 iOriginalBusyDelay = oList.getBusyIndicatorDelay();
@@ -57,37 +54,6 @@ sap.ui.define([
 
         },
 
-        _onRoute: function (evt) {
-            var sOrgeh = evt.getParameters().arguments.orgeh;
-            this.utilLoadEntity(sOrgeh);
-        },
-
-        utilLoadEntity: function (sOrgeh) {
-            var that = this;
-
-            // Não funciona mais. Filters e Expand são enviados como parâmetro no urlParameters
-            // var sURL = "/employeesSet/?$filter=orgeh eq '" + sOrgeh + "'";
-            var sURL = "/employeesSet";
-            var value = sURL;
-            var oJson = new sap.ui.model.json.JSONModel();
-            oOData.read(value, {
-                urlParameters: {
-                    "$filter": `orgeh eq '${sOrgeh}'`
-                },
-                success: function (oSuccess) {
-                    if (oSuccess) {
-                        oJson.setData(oSuccess);
-                        that.getView().setModel(oJson, "Employees");
-                    }
-
-                },
-                error: function (oError) {
-                    console.log("Erro de odata");
-                }
-            });
-
-        },
-
         onEmployeeItemPress: function (evt) {
             var oItem = evt.getSource();
             this._showDetails(oItem);
@@ -95,23 +61,10 @@ sap.ui.define([
 
         _showDetails: function (oItem) {
             this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
-            var vPeriod = "";
-            var oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({
-                pattern: "dd.MM.yyyy"
-            });
-            var vDate = oDateFormat.format(new Date());
-            // Exemplo: "202007";
-            vPeriod = vDate.substr(6, 4) + vDate.substr(3, 2);
+
             var oEntry = oItem.getBindingContext().getProperty();
 
-            //this.getRouter().navTo("Detail", {
-            //    pernr: oEntry.pernr,
-            //    datum: vPeriod,
-            //    orgeh: oEntry.orgeh
-            //});
-
             this.getRouter().navTo("object", {
-                orgeh: oEntry.orgeh,
                 pernr: oEntry.pernr
             });
             
@@ -226,14 +179,6 @@ sap.ui.define([
             this._oList.getBinding("items").filter(aFilters, "Application");
             // changes the noDataText of the list in case there are no filter results
             
-            console.log(oViewModel);
-
-            if (aFilters.length !== 0) {
-                oViewModel.setProperty("/noDataText", this.getResourceBundle().getText("masterListNoDataWithFilterOrSearchText"));
-            } else if (this._oListFilterState.aSearch.length > 0) {
-                // only reset the no data text to default when no new search was triggered
-                oViewModel.setProperty("/noDataText", this.getResourceBundle().getText("masterListNoDataText"));
-            }
         },
 
         onBackPress: function () {

@@ -16,7 +16,6 @@ sap.ui.define([
     // var oOData = new sap.ui.model.odata.ODataModel(sServiceUrl, true);
     var oOData;
     var gPernr = "";
-    var gOrgeh = "";
     var gPeriod = "";
 
     function addDate(dt, amount, dateType) {
@@ -54,32 +53,35 @@ sap.ui.define([
 
             this.Busy = new sap.m.BusyDialog({ busyIndicatorDelay: 0 });
             this.Busy.open();
-            this.setInitDate();
 
-            this.getRouter().getRoute("Detail").attachMatched(this._onRoute, this);
+            this.getRouter().getRoute("Detail").attachPatternMatched(this._onRoute, this);
 
             this.setModel(oViewModel, "detailView");
-            this.setModel(oJson, "Header");
 
+            this.getOwnerComponent().getModel().metadataLoaded().then(this._onMetadataLoaded.bind(this));
+            
             this.Busy.close();
         },
 
-        _onRoute: function (evt) {
+        _onRoute: function (oEvent) {
 
-            gPernr = evt.getParameters().arguments.pernr;
-            gOrgeh = evt.getParameters().arguments.orgeh;
-            gPeriod = evt.getParameters().arguments.datum;
+            gPernr = oEvent.getParameters().arguments.pernr;
+            gPeriod = oEvent.getParameters().arguments.datum;
 
-            this.loadHeader(gPernr);
-            this.utilLoadEntity(gPernr, gPeriod);
-        },
-
-        _onObjectMatched: function (oEvent) {
             //Parâmetros URL
-            gPernr = oEvent.getParameter("arguments").pernr;
-            gOrgeh = oEvent.getParameter("arguments").orgeh;
-            gPeriod = oEvent.getParameter("arguments").datum;
+            var sAno = oEvent.getParameter("arguments").ano;
+            var sMes = oEvent.getParameter("arguments").mes;
+            var sPernr = oEvent.getParameter("arguments").pernr;
 
+            this.getModel("appView").setProperty("/layout", "ThreeColumnsEndExpanded");
+            this.getModel().metadataLoaded().then(function () {
+                var sObjectPath = this.getModel().createKey("ValidateSet", {
+                    Pernr: sPernr,
+                    Ano: sAno,
+                    Mes: sMes
+                });
+                this._bindView("/" + sObjectPath);
+            }.bind(this));
         },
 
         _bindView: function (sObjectPath) {
@@ -89,11 +91,10 @@ sap.ui.define([
             // If the view was not bound yet its not busy, only if the binding requests data it is set to busy again
             oViewModel.setProperty("/busy", false);
 
-            debugger;
             this.getView().bindElement({
                 path: sObjectPath,
                 parameters: {
-                    expand: "Header"
+                    expand: "header,Assinatura"
                 },
                 events: {
                     change: this._onBindingChange.bind(this),
@@ -129,102 +130,25 @@ sap.ui.define([
 
             // No data for the binding
             if (!oElementBinding.getBoundContext()) {
-                this.getRouter().getTargets().display("detailObjectNotFoundP");
-                // if object could not be found, the selection in the master list
-                // does not make sense anymore.
-                this.getOwnerComponent().oListSelector.clearMasterListSelection();
+                this.getRouter().getTargets().display("detailObjectNotFound");
                 oViewModel.setProperty("/busy", false);
                 return;
             }
 
-            //Url PDF
-            /*
-            var sKeyPdf = this.getModel().createKey("EspelhoPontoSet", {
-                Pernrg: "0",
-                Pernr: oElementBinding.getBoundContext().getProperty("Pernr"),
-                Ano: oElementBinding.getBoundContext().getProperty("Ano"),
-                Mes: oElementBinding.getBoundContext().getProperty("Mes")
-            });
+            oViewModel.setProperty("/busy", false);
 
-            var sUrl = sKeyPdf + "/$value";
-            this.getPdfbyKey(sUrl);
-            */
-        },
+            var sPerio = oElementBinding.getBoundContext().getProperty("Ano") + oElementBinding.getBoundContext().getProperty("Mes");
 
-        loadHeader: function (matricula) {
-            var that = this;
+            this.utilLoadEntity(gPernr, sPerio);
 
-            var sURL = "/headerSet";
-            var value = sURL;
-            var oJson = new sap.ui.model.json.JSONModel();
-            oOData.read(value, {
-                urlParameters: {
-                    "$filter": `pernr eq '${matricula}'`
-                },
-                success: function (oSuccess) {
-                    if (oSuccess) {
-                        oJson.setData(oSuccess);
-                        console.log(oSuccess.results[0]);
-                        that.getView().setModel(oJson, "header");
-                    }
-                },
-                error: function (oError) {
-                    console.log("Erro de odata");
-                }
-            });
         },
 
         utilLoadEntity: function (pPernr, pPeriodo) {
-            //utilLoadEntity: function (pPernr, pBegda, pEndda) {
             var that = this;
 
-            /*
-            var vBegda;
-            var vEndda;
-            var today;
-            var parts;
-            var vPernr = pPernr;
-            if (!pBegda) {
-                today = new Date();
-                vBegda = new Date(today.getFullYear(), today.getMonth(), 1); //Retorna data com primeiro dia do mês atual
-                vBegda = this.formatToDate(vBegda); //Retorna data com primeiro dia do mes formatada ex: "2020-11-01T00:00:00"
-            }
-            else {
-                vBegda = pBegda;
-            }
-
-            if (!pEndda) {
-                today = new Date();
-                today = addDate(today, -1, "days");
-                vEndda = this.formatToDate(today); //Retorna data com dia de hoje formatada ex: "2020-11-10T00:00:00"
-            }
-            else {
-                vEndda = pEndda;
-            }
             var oPDFViewer = this.getView().byId("idbancohoras");
-            var sURL = "/BancoHoraPDFSet(Pernr='" + vPernr + "',Begda=datetime'" + vBegda + "',Endda=datetime'" + vEndda + "')/$value";
-
-            sURL = sURL.replace(/:/g, '%3A');
-            */
-
-            if (!pPeriodo) {
-                var today = new Date();
-                var vPeriodo = today.getFullYear() + '' + today.getMonth() + 1;
-            }
-            else
-                vPeriodo = pPeriodo;
-
-            console.log(pPeriodo);
-            var oModelp = new sap.ui.model.json.JSONModel();
-            oModelp.setData({
-                Ano: vPeriodo.substring(0, 4),
-                Mes: vPeriodo.substring(4, 6)
-            });
-            this.getView().setModel(oModelp);
-
-            var oPDFViewer = this.getView().byId("idbancohoras");
-
-            var sURL = "/BHPeriodPDF(Pernr='" + pPernr + "',Period='" + vPeriodo + "')/$value";
+            debugger;
+            var sURL = "/BHPeriodPDF(Pernr='" + pPernr + "',Period='" + pPeriodo + "')/$value";
             sURL = sURL.replace(/:/g, '%3A');
 
             var oModel = this.getOwnerComponent().getModel();
@@ -339,7 +263,6 @@ sap.ui.define([
                         that.getModel("appView").setProperty("/layout", "OneColumn");
                         break;
                     case "Desktop":
-                        debugger;
                         var vFullSreen = that.getModel("appView").getData().layout;
                         if (vFullSreen === "ThreeColumnsEndExpanded") {
                             //that._setLayout("EndColumnFullScreen");
@@ -408,7 +331,6 @@ sap.ui.define([
             var bReplace = !Device.system.phone;
             this.getModel("appView").setProperty("/actionButtonsInfo/endColumn/fullScreen", false);
             this.getRouter().navTo("object", {
-                orgeh: gOrgeh,
                 pernr: gPernr
             }, bReplace);
 

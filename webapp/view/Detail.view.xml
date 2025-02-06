@@ -2,13 +2,14 @@
 	xmlns="sap.m" 
 	xmlns:mvc="sap.ui.core.mvc" 
 	xmlns:layout="sap.ui.layout"
-	xmlns:semantic="sap.f.semantic" 
+	xmlns:semantic="sap.f.semantic"
+	xmlns:core="sap.ui.core"
 	xmlns:l="sap.ui.layout">
 
 	<semantic:SemanticPage id="detailPage" busy="{detailView>/busy}" busyIndicatorDelay="{detailView>/delay}" class="sapUiContentPadding">
 		
 		<semantic:titleHeading >
-			<Title text="{header>/results/0/cname}"/>
+			<Title text="{header/cname}"/>
 		</semantic:titleHeading >
 		
 		<semantic:headerContent>
@@ -17,16 +18,16 @@
 				
 				<layout:VerticalLayout class="sapUiMediumMarginEnd" width="{= ${appView>/actionButtonsInfo/endColumn/fullScreen} ? 'auto' : '200px' }">
 					<!--<ObjectStatus title="{i18n>DetNome}" text="{Header/Cname}" class="sapUiTinyMarginTop"/>-->
-					<ObjectStatus title="POSIÇÃO" text="{header>/results/0/plans}" class="sapUiTinyMarginTop"/>
-					<ObjectStatus title="GESTOR" text="{header>/results/0/gname}" class="sapUiTinyMarginTop"/>
+					<ObjectStatus title="POSIÇÃO" text="{header/plans}" class="sapUiTinyMarginTop"/>
+					<ObjectStatus title="GESTOR" text="{header/gname}" class="sapUiTinyMarginTop"/>
 				</layout:VerticalLayout>
 				
 				<layout:VerticalLayout class="sapUiMediumMarginEnd" width="{= ${appView>/actionButtonsInfo/endColumn/fullScreen} ? 'auto' : '200px' }">
-					<ObjectStatus title="UNIDADE ORG" text="{header>/results/0/orgeh}" class="sapUiTinyMarginTop"/>
+					<ObjectStatus title="UNIDADE ORG" text="{header/orgeh}" class="sapUiTinyMarginTop"/>
 				</layout:VerticalLayout>
 				
 				<layout:VerticalLayout class="sapUiMediumMarginEnd" width="{= ${appView>/actionButtonsInfo/endColumn/fullScreen} ? 'auto' : '200px' }">
-					<ObjectStatus title="REGRA PL.HORÁR.TRAB" text="{header>/results/0/rgplnh}" class="sapUiTinyMarginTop"/>
+					<ObjectStatus title="REGRA PL.HORÁR.TRAB" text="{header/rgplnh}" class="sapUiTinyMarginTop"/>
 
 				</layout:VerticalLayout>
 
@@ -54,7 +55,7 @@
 						<IconTabBar class="sapThemeText" expandable="false" expanded="false" headerBackgroundDesign="Transparent">
 							<items>
 								<IconTabFilter id="myDP2" showAll="true" design="Horizontal"
-									count="{parts: [ { path: '/Mes' },{ path: '/Ano'}], formatter: '.formatter.PeriodText'}" textDirection="Inherit"></IconTabFilter>
+									count="{parts: [ { path: 'Mes' },{ path: 'Ano'}], formatter: '.formatter.PeriodText'}" textDirection="Inherit"></IconTabFilter>
 							</items>
 						</IconTabBar>
 					</VBox>

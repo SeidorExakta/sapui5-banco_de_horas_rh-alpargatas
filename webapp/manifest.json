@@ -108,78 +108,60 @@
           ]
         },
         "clearControlAggregation": true,
-        "async": true
+        "async": true,
+        "viewLevel": 1 
       },
       "routes": [
-        {
-          "name": "MasterEmployee",
-          "pattern": "MasterEmployee/{orgeh}",
-          "titleTarget": "",
-          "target": [
-            "MasterEmployee",
-            "object"
-          ]
-        },
         {
           "name": "MasterEmployee",
           "pattern": "MasterEmployee",
           "titleTarget": "",
           "target": [
-            "MasterEmployee",
-            "object"
+            "MasterEmployee"
           ]
         },
         {
-          "pattern": "Orgeh/{orgeh}/Employee/{pernr}",
+          "pattern": "Employee/{pernr}",
           "name": "object",
           "target": [
-            "orgeh",
-            "object",
             "MasterEmployee",
-            "Detail"
+            "object"
           ]
         },
         {
           "name": "Detail",
-          "pattern": "Detail/{pernr}/Detail/{datum}/Detail{orgeh}",
+          "pattern": "Employee/{pernr}/ano/{ano}/mes/{mes}",
           "titleTarget": "",
           "target": [
-            "Detail",
             "MasterEmployee",
-            "object"
+            "object",
+            "Detail"
           ]
         }
       ],
       "targets": {
+        "MasterEmployee": {
+          "viewName": "MasterEmployee",
+          "viewLevel": 1,
+          "viewId": "masterEmployee"
+        },       
         "Detail": {
           "viewName": "Detail",
           "viewId": "detail",
-          "viewLevel": 3,
-          "controlId": "layout",
-          "controlAggregation": "endColumnPages",
-          "transition": "slide"
-        },
+          "viewLevel": 4,
+          "controlAggregation": "endColumnPages"
+        },        
         "object": {
           "viewName": "Periodos",
           "viewId": "periodos",
-          "viewLevel": 2,
+          "viewLevel": 3,
           "controlAggregation": "midColumnPages"
         },
-        "MasterEmployee": {
-          "viewType": "XML",
-          "viewName": "MasterEmployee",
-          "viewId": "masterEmployee",
-          "viewLevel": 1,
-          "controlId": "layout",
-          "viewPath": "hr.bancodehorasrh.view",
-          "controlAggregation": "beginColumnPages"
-        },
-        "MasterEmployeeBack": {
-          "viewName": "MasterEmployee",
-          "viewId": "masterEmployeeBack",
-          "controlId": "layout",
-          "controlAggregation": "beginColumnPages"
-        }
+        "detailObjectNotFound": {
+          "viewName": "DetailObjectNotFound",
+          "viewId": "detailObjectNotFound",
+          "controlAggregation": "endColumnPages"
+      }        
       }
     },
     "rootView": {

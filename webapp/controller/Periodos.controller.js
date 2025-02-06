@@ -11,9 +11,6 @@ sap.ui.define([
 ], function (BaseController, JSONModel, formatter, Filter, Sorter, FilterOperator, Device, mobileLibrary, MessageBox) {
     "use strict";
 
-    var gPernr = "";
-    var gOrgeh = "";
-
     return BaseController.extend("hr.bancodehorasrh.controller.Periodos", {
 
         formatter: formatter,
@@ -35,7 +32,7 @@ sap.ui.define([
 
             this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
 
-            this.setModel(oViewModel, "detailView");
+            this.setModel(oViewModel, "detailViewPerio");
 
             this.getOwnerComponent().getModel().metadataLoaded().then(this._onMetadataLoaded.bind(this));
         },
@@ -132,9 +129,6 @@ sap.ui.define([
             this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
             this.setModel(new JSONModel(oEvent.getParameters("arguments").arguments), "argsDetailView");
             
-            gPernr = sArguments.pernr;
-            gOrgeh = sArguments.orgeh;
-
             this.getModel().metadataLoaded().then(function () {
                 var sObjectPath = this.getModel().createKey("employeesSet", {
                     pernr: sArguments.pernr
@@ -152,13 +146,11 @@ sap.ui.define([
          */
         _bindView: function (sObjectPath) {
             // Set busy indicator during view binding
-            var oViewModel = this.getModel("detailView");
+            var oViewModel = this.getModel("detailViewPerio");
 
             // If the view was not bound yet its not busy, only if the binding requests data it is set to busy again
             oViewModel.setProperty("/busy", false);
             
-            sObjectPath = sObjectPath.replace("null", gPernr);
-
             this.getView().bindElement({
                 path: sObjectPath,
                 events: {
@@ -181,10 +173,6 @@ sap.ui.define([
             // No data for the binding
             if (!oElementBinding.getBoundContext()) {
                 this.getRouter().getTargets().display("masterEmployee");
-                //this.getRouter().getTargets().display("detailObjectNotFound");
-                // if object could not be found, the selection in the master list
-                // does not make sense anymore.
-                //this.getOwnerComponent().oListSelector.clearMasterListSelection();
                 return;
             }
 
@@ -193,7 +181,7 @@ sap.ui.define([
         _onMetadataLoaded: function () {
             // Store original busy indicator delay for the detail view
             var iOriginalViewBusyDelay = this.getView().getBusyIndicatorDelay(),
-                oViewModel = this.getModel("detailView");
+                oViewModel = this.getModel("detailViewPerio");
 
             // Make sure busy indicator is displayed immediately when
             // detail view is displayed for the first time
@@ -205,11 +193,6 @@ sap.ui.define([
             oViewModel.setProperty("/delay", iOriginalViewBusyDelay);
         },
 
-        _onRoute: function (evt) {
-            gPernr = evt.getParameters().arguments.pernr;
-            gOrgeh = evt.getParameters().arguments.orgeh;
-        },
-
         /**
          * Shows the selected item on the detail page
          * On phones a additional history entry is created
@@ -219,17 +202,10 @@ sap.ui.define([
         _showDetail: function (oItem) {
             var bReplace = !Device.system.phone;
             this.getModel("appView").setProperty("/layout", "ThreeColumnsEndExpanded");
-            var vPeriod = oItem.getBindingContext().getProperty("Ano") + oItem.getBindingContext().getProperty("Mes");
-            debugger;
             this.getRouter().navTo("Detail", {
-                orgeh: this.getModel("argsDetailView").getProperty("/orgeh"),
-                //pernr: oItem.getBindingContext().getProperty("Pernr"),
-                pernr: gPernr,
-                datum: vPeriod,
-                orgeh: gOrgeh,
-                //ano: oItem.getBindingContext().getProperty("Ano"),
-                //mes: oItem.getBindingContext().getProperty("Mes"),
-                //option: "default"
+                pernr: oItem.getBindingContext().getProperty("Pernr"),
+                mes: oItem.getBindingContext().getProperty("Mes"),
+                ano: oItem.getBindingContext().getProperty("Ano")
             }, bReplace);
         },
 
