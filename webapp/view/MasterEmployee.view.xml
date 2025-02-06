@@ -19,13 +19,12 @@
 					sorter: {
 						path: 'cname',
 						descending: false
-					},
-					groupHeaderFactory: '.createGroupHeader'
+					}
 				}"
 				busyIndicatorDelay="{masterView>/delay}"
 				noDataText="{masterView>/noDataText}"
 				growing="true"
-				growingScrollToLoad="true"
+				growingScrollToLoad="false"
 				updateFinished=".onUpdateFinished"
 				selectionChange=".onSelectionChange">
 				<headerToolbar>
