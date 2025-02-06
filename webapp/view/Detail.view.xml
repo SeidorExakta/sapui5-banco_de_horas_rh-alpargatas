@@ -36,15 +36,15 @@
 
 		<!--Semantic ShareMenu Buttons-->
 		<semantic:closeAction>
-			<semantic:CloseAction id="closeColumn" visible="{= ${detailView>/option} === 'default'}" press=".onCloseDetailPress"/>
+			<semantic:CloseAction id="closeColumn" visible="true" press=".onCloseDetailPress"/>
 		</semantic:closeAction>
 		<semantic:fullScreenAction>
 			<semantic:FullScreenAction id="enterFullScreen"
-				visible="{= !${device>/system/phone} &amp;&amp; !${appView>/actionButtonsInfo/endColumn/fullScreen} &amp;&amp; ${detailView>/option} === 'default'}" press=".toggleFullScreen"/>
+				visible="{= !${device>/system/phone} &amp;&amp; !${appView>/actionButtonsInfo/endColumn/fullScreen}}" press=".toggleFullScreen"/>
 		</semantic:fullScreenAction>
 		<semantic:exitFullScreenAction>
 			<semantic:ExitFullScreenAction id="exitFullScreen"
-				visible="{= !${device>/system/phone} &amp;&amp; ${appView>/actionButtonsInfo/endColumn/fullScreen} &amp;&amp; ${detailView>/option} === 'default' }" press=".toggleFullScreen"/>
+				visible="{= !${device>/system/phone} &amp;&amp; ${appView>/actionButtonsInfo/endColumn/fullScreen}}" press=".toggleFullScreen"/>
 		</semantic:exitFullScreenAction>
 		<semantic:content>
 			<VBox>

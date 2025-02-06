@@ -50,11 +50,10 @@ sap.ui.define([
         onCloseDetailPress: function () {
             var bReplace = !Device.system.phone;
             this.getModel("appView").setProperty("/actionButtonsInfo/midColumn/fullScreen", false);
+            this.getModel("appView").setProperty("/layout", "OneColumn");
             // No item should be selected on master after detail page is closed
             // this.getOwnerComponent().oListSelector.clearMasterListSelection();
-            this.getRouter().navTo("orgeh", {
-                orgeh: this.getModel("argsDetailView").getProperty("/orgeh")
-            }, bReplace);
+            this.getRouter().navTo("MasterEmployee", bReplace);
         },
 
         /**

@@ -5,7 +5,7 @@
     {
       "source": "^/sap/(.*)$",
       "target": "/sap/$1",
-      "destination": "SAP_ECC_DEV",
+      "destination": "SAP_ECC",
       "authenticationType": "xsuaa",
       "csrfProtection": false
     },

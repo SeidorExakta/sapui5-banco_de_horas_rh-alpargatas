@@ -15,9 +15,9 @@
 				width="auto"
 				class="sapFDynamicPageAlignContent"
 				items="{
-					path: 'Employees>/results',
+					path: '/employeesSet',
 					sorter: {
-						path: 'orgehTxt',
+						path: 'cname',
 						descending: false
 					},
 					groupHeaderFactory: '.createGroupHeader'
@@ -67,9 +67,9 @@
 				</headerToolbar>
 				<items>
 					<StandardListItem id="idStandardListItem"
-						title="{Employees>cname}"
+						title="{pernr} - {cname}"
 						type="Active"
-						counter="{Employees>count}"
+						counter="{count}"
 						press=".onEmployeeItemPress">
 					</StandardListItem>
 				</items>

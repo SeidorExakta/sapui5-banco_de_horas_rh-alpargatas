@@ -19,7 +19,7 @@ server:
           - path: /sap
             url: http://dev:8001
             client: '200'
-            destination: SAP_ECC_DEV
+            destination: SAP_ECC_QAS
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:

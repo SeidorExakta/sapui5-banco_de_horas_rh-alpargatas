@@ -7,8 +7,9 @@ sap.ui.define([
     "sap/m/Button",
     "sap/m/ButtonType",
     "sap/ui/model/json/JSONModel",
+    "sap/ui/Device",
     "../model/formatter",
-], function (BaseController, MessageToast, DateFormat, PDFViewer, Dialog, Button, ButtonType, JSONModel, formatter) {
+], function (BaseController, MessageToast, DateFormat, PDFViewer, Dialog, Button, ButtonType, JSONModel, Device, formatter) {
     "use strict";
 
     // var sServiceUrl = ("/sap/opu/odata/sap/ZHRTIME_RH_BH_SRV/");
@@ -34,7 +35,7 @@ sap.ui.define([
     return BaseController.extend("hr.bancodehorasrh.controller.Detail", {
 
         formatter: formatter,
-        
+
         onInit: function () {
             // Step adicional em todas as apps pra funcionar essa gambiarra de acesso ao oModel no Workzone
             oOData = this.getOwnerComponent().getModel();
@@ -54,7 +55,7 @@ sap.ui.define([
             this.Busy = new sap.m.BusyDialog({ busyIndicatorDelay: 0 });
             this.Busy.open();
             this.setInitDate();
-           
+
             this.getRouter().getRoute("Detail").attachMatched(this._onRoute, this);
 
             this.setModel(oViewModel, "detailView");
@@ -75,10 +76,10 @@ sap.ui.define([
 
         _onObjectMatched: function (oEvent) {
             //Parâmetros URL
-            gPernr  = oEvent.getParameter("arguments").pernr;
-            gOrgeh  = oEvent.getParameter("arguments").orgeh;
+            gPernr = oEvent.getParameter("arguments").pernr;
+            gOrgeh = oEvent.getParameter("arguments").orgeh;
             gPeriod = oEvent.getParameter("arguments").datum;
-            
+
         },
 
         _bindView: function (sObjectPath) {
@@ -107,7 +108,7 @@ sap.ui.define([
         _onMetadataLoaded: function () {
             // Store original busy indicator delay for the detail view
             var iOriginalViewBusyDelay = this.getView().getBusyIndicatorDelay(),
-            oViewModel = this.getModel("detailView");
+                oViewModel = this.getModel("detailView");
 
             // Make sure busy indicator is displayed immediately when
             // detail view is displayed for the first time
@@ -174,7 +175,7 @@ sap.ui.define([
         },
 
         utilLoadEntity: function (pPernr, pPeriodo) {
-        //utilLoadEntity: function (pPernr, pBegda, pEndda) {
+            //utilLoadEntity: function (pPernr, pBegda, pEndda) {
             var that = this;
 
             /*
@@ -206,9 +207,8 @@ sap.ui.define([
             sURL = sURL.replace(/:/g, '%3A');
             */
 
-            if (!pPeriodo)
-            {
-                var today  = new Date();
+            if (!pPeriodo) {
+                var today = new Date();
                 var vPeriodo = today.getFullYear() + '' + today.getMonth() + 1;
             }
             else
@@ -217,8 +217,8 @@ sap.ui.define([
             console.log(pPeriodo);
             var oModelp = new sap.ui.model.json.JSONModel();
             oModelp.setData({
-                Ano: vPeriodo.substring(0,4),
-                Mes:vPeriodo.substring(4,6)
+                Ano: vPeriodo.substring(0, 4),
+                Mes: vPeriodo.substring(4, 6)
             });
             this.getView().setModel(oModelp);
 
@@ -230,22 +230,22 @@ sap.ui.define([
             var oModel = this.getOwnerComponent().getModel();
             var oXhr = new window.XMLHttpRequest();
             var sUrlGet = oModel.sServiceUrl + "/" + sURL;
-			oXhr.open("GET", sUrlGet);
+            oXhr.open("GET", sUrlGet);
 
             oXhr.responseType = "blob"; // force the HTTP response, response-type header to be blob
-			oXhr.onload = function () {
-				var oBlob = oXhr.response;
-				var sNewURL = window.URL.createObjectURL(new Blob([oBlob], {
-					type: "application/pdf"
-				}));
-				//Publica URL
-				jQuery.sap.addUrlWhitelist("blob");
-				//Atualiza model com link
-				that.getView().byId("idbancohoras").setSource(sNewURL);
-				that.getView().byId("idbancohoras").setDisplayType("Auto");
-				that.getView().byId("idbancohoras").setVisible(true);
-			};
-			oXhr.send();
+            oXhr.onload = function () {
+                var oBlob = oXhr.response;
+                var sNewURL = window.URL.createObjectURL(new Blob([oBlob], {
+                    type: "application/pdf"
+                }));
+                //Publica URL
+                jQuery.sap.addUrlWhitelist("blob");
+                //Atualiza model com link
+                that.getView().byId("idbancohoras").setSource(sNewURL);
+                that.getView().byId("idbancohoras").setDisplayType("Auto");
+                that.getView().byId("idbancohoras").setVisible(true);
+            };
+            oXhr.send();
 
             /*
             oOData.read(sURL, {
@@ -400,6 +400,34 @@ sap.ui.define([
             });
             this.getView().setModel(oModel);
 
+        },
+        /**
+        * Set the full screen mode to false and navigate to master page
+        */
+        onCloseDetailPress: function () {
+            var bReplace = !Device.system.phone;
+            this.getModel("appView").setProperty("/actionButtonsInfo/endColumn/fullScreen", false);
+            this.getRouter().navTo("object", {
+                orgeh: gOrgeh,
+                pernr: gPernr
+            }, bReplace);
+
+        },
+
+        /**
+         * Toggle between full and non full screen mode.
+         */
+        toggleFullScreen: function () {
+            var bFullScreen = this.getModel("appView").getProperty("/actionButtonsInfo/endColumn/fullScreen");
+            this.getModel("appView").setProperty("/actionButtonsInfo/endColumn/fullScreen", !bFullScreen);
+            if (!bFullScreen) {
+                // store current layout and go full screen
+                this.getModel("appView").setProperty("/previousLayout", this.getModel("appView").getProperty("/layout"));
+                this.getModel("appView").setProperty("/layout", "EndColumnFullScreen");
+            } else {
+                // reset to previous layout
+                this.getModel("appView").setProperty("/layout", this.getModel("appView").getProperty("/previousLayout"));
+            }
         }
 
     });

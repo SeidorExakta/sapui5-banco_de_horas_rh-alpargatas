@@ -17,7 +17,7 @@
     },
     "dataSources": {
       "mainService": {
-        "uri": "/sap/opu/odata/sap/ZHRTIME_RH_BH_SRV/",
+        "uri": "/sap/opu/odata/sap/YHRTIME_HR_BH_SRV/",
         "type": "OData",
         "settings": {
           "annotations": [],

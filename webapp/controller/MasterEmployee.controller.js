@@ -23,9 +23,9 @@ sap.ui.define([
 
             var oComponent = this.getOwnerComponent();
             this._router = oComponent.getRouter();
-            this._router.getTarget("MasterEmployee").attachDisplay(function (oEvent) {
-                this.utilLoadEntity(oEvent.getParameter("data").orgeh);
-            }, this);
+            // this._router.getTarget("MasterEmployee").attachDisplay(function (oEvent) {
+            //     this.utilLoadEntity(oEvent.getParameter("data").orgeh);
+            // }, this);
 
             var oList = this.byId("list"),
                 iOriginalBusyDelay = oList.getBusyIndicatorDelay();
@@ -102,7 +102,7 @@ sap.ui.define([
             var vDate = oDateFormat.format(new Date());
             // Exemplo: "202007";
             vPeriod = vDate.substr(6, 4) + vDate.substr(3, 2);
-            var oEntry = oItem.getBindingContext("Employees").getProperty();
+            var oEntry = oItem.getBindingContext().getProperty();
 
             //this.getRouter().navTo("Detail", {
             //    pernr: oEntry.pernr,

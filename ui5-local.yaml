@@ -34,7 +34,7 @@ server:
       configuration:
         mountPath: /
         services:
-          - urlPath: /sap/opu/odata/sap/ZHRTIME_RH_BH_SRV
+          - urlPath: /sap/opu/odata/sap/YHRTIME_HR_BH_SRV
             metadataPath: ./webapp/localService/metadata.xml
             mockdataPath: ./webapp/localService/data
             generateMockData: true
