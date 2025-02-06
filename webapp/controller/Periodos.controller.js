@@ -31,6 +31,7 @@ sap.ui.define([
             this._oBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
 
             this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
+            this.getRouter().getRoute("Detail").attachPatternMatched(this._onObjectMatched, this);
 
             this.setModel(oViewModel, "detailViewPerio");
 
