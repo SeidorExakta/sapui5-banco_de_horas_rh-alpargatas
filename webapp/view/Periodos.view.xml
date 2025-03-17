@@ -6,7 +6,7 @@
 		</semantic:titleHeading>
 		<semantic:headerContent>
 			<ToolbarSpacer/>
-			<SearchField id="idSearch" search=".onSearch" width="auto" placeholder="{i18n>placeSearch}"/>
+			<SearchField id="idSearch" search=".onSearch" width="auto" placeholder="{i18n>placeSearch}" visible="false"/>
 			<!--<CheckBox id="idPend" text="Somente pendentes" selected="true" select="onSearch"/>-->
 		</semantic:headerContent>
 		<semantic:exitFullScreenAction>
