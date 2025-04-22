@@ -18,11 +18,12 @@
 				
 				<layout:VerticalLayout class="sapUiMediumMarginEnd" width="{= ${appView>/actionButtonsInfo/endColumn/fullScreen} ? 'auto' : '200px' }">
 					<!--<ObjectStatus title="{i18n>DetNome}" text="{Header/Cname}" class="sapUiTinyMarginTop"/>-->
-					<ObjectStatus title="POSIÇÃO" text="{header/plans}" class="sapUiTinyMarginTop"/>
+					<ObjectStatus title="NOME SOCIAL" text="{header/Sname}" class="sapUiTinyMarginTop"/>
 					<ObjectStatus title="GESTOR" text="{header/gname}" class="sapUiTinyMarginTop"/>
 				</layout:VerticalLayout>
-				
+			
 				<layout:VerticalLayout class="sapUiMediumMarginEnd" width="{= ${appView>/actionButtonsInfo/endColumn/fullScreen} ? 'auto' : '200px' }">
+					<ObjectStatus title="POSIÇÃO" text="{header/plans}" class="sapUiTinyMarginTop"/>
 					<ObjectStatus title="UNIDADE ORG" text="{header/orgeh}" class="sapUiTinyMarginTop"/>
 				</layout:VerticalLayout>
 				
