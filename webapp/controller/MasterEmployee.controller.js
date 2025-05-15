@@ -77,7 +77,11 @@ sap.ui.define([
             }
             var sQuery = oEvent.getParameter("query");
             if (sQuery) {
-                this._oListFilterState.aSearch = [new Filter("cname", FilterOperator.Contains, sQuery)];
+                if (isNaN(sQuery)) {
+                    this._oListFilterState.aSearch = [new Filter("cname", FilterOperator.Contains, sQuery)];
+                } else {
+                    this._oListFilterState.aSearch = [new Filter("pernr", FilterOperator.Contains, sQuery)];
+                }
             } else {
                 this._oListFilterState.aSearch = [];
             }
